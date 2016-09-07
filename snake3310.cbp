@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="snake3310" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/snake" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add option="-DDEBUG" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/snake" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-fomit-frame-pointer" />
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-O3" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=c99" />
+			<Add directory="$(#sdl.include)" />
+		</Compiler>
+		<Linker>
+			<Add library="mingw32" />
+			<Add library="SDLmain" />
+			<Add library="SDL.dll" />
+			<Add library="user32" />
+			<Add library="gdi32" />
+			<Add library="winmm" />
+			<Add library="dxguid" />
+			<Add library="SDL_gfx" />
+			<Add library="SDL_ttf" />
+			<Add library="SDL_image" />
+			<Add library="SDL_mixer" />
+			<Add directory="$(#sdl.lib)" />
+		</Linker>
+		<Unit filename="config.ini" />
+		<Unit filename="src/debugmalloc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/debugmalloc.h" />
+		<Unit filename="src/dictionary.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/dictionary.h" />
+		<Unit filename="src/iniparser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/iniparser.h" />
+		<Unit filename="src/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/main.h" />
+		<Unit filename="src/menu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/menu.h" />
+		<Unit filename="src/nokia-fonts.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/nokia-fonts.h" />
+		<Unit filename="src/sbug.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sbug.h" />
+		<Unit filename="src/sdata.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sdata.h" />
+		<Unit filename="src/sdraw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sdraw.h" />
+		<Unit filename="src/sfood.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sfood.h" />
+		<Unit filename="src/sgame.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sgame.h" />
+		<Unit filename="src/sintro.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sintro.h" />
+		<Unit filename="src/sitem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sitem.h" />
+		<Unit filename="src/slib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/slib.h" />
+		<Unit filename="src/smaze.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/smaze.h" />
+		<Unit filename="src/snake.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/snake.h" />
+		<Unit filename="src/sopt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sopt.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

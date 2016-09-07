@@ -31,3 +31,8 @@
 # Debug files
 *.dSYM/
 *.su
+
+font/*
+img/*
+release/*
+_memory_dump.txt
