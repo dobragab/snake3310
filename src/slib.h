@@ -23,4 +23,6 @@ enum
 #define SDL_PUSHEVENT(t) SDL_PushEvent((SDL_Event[]){{.type = t}})
 #define SDL_ADDTIMER(t) SDL_AddTimer(t, timer_callback, NULL)
 
+void SDL_ToggleTimer(SDL_TimerID* timer);
+
 #endif // SLIB_H_INCLUDED

@@ -82,14 +82,7 @@ static MenuResult StartGame()
                         break;
 
                     case SDLK_SPACE:
-                        if (timer)
-                        {
-                            SDL_RemoveTimer(timer);
-                            timer = 0;
-                        }
-                        else
-                            timer = SDL_AddTimer(SPEEDS[LEVEL], timer_callback, NULL);
-
+                        SDL_ToggleTimer(&timer);
                         break;
 
                     case SDLK_ESCAPE:

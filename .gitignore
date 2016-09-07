@@ -36,3 +36,5 @@ font/*
 img/*
 release/*
 _memory_dump.txt
+snake3310.depend
+*.depend

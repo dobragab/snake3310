@@ -25,3 +25,17 @@ Uint32 timer_callback(Uint32 ms, void *param)
 
     return ms;
 }
+
+void SDL_ToggleTimer(SDL_TimerID* timer)
+{
+    if(timer == NULL)
+        return;
+
+    if(*timer)
+    {
+        SDL_RemoveTimer(*timer);
+        *timer = 0;
+    }
+    else
+        *timer = SDL_AddTimer(SPEEDS[LEVEL], timer_callback, NULL);
+}
