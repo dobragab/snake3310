@@ -5,7 +5,7 @@
 
 cell food_contains(point p);
 point food_eat(point p);
-void food_new(int size);
+void food_new(int size, color c);
 void food_delete();
 void food_draw();
 

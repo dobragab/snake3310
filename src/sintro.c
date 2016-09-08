@@ -25,9 +25,9 @@ void PlayIntro()
                     break;
                 }
 
-                draw_cls();
+                draw_cls(C_PIXEL);
 
-                draw_img(&intro[frames]);
+                draw_img(&intro[frames], C_PIXEL);
 
                 ++frames;
                 break;

@@ -116,6 +116,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/snake.h" />
+		<Unit filename="src/snakes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/snakes.h" />
 		<Unit filename="src/sopt.c">
 			<Option compilerVar="CC" />
 		</Unit>

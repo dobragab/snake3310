@@ -20,7 +20,7 @@ if (setjmp (error_buffer) == SUCCESS)
     LoadConfig();
 
     SDL_Init (SDL_INIT_EVERYTHING);
-    screen_init((point){S_SCREEN_X, S_SCREEN_Y});
+    screen_init();
 
     PlayIntro();
 

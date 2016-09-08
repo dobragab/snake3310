@@ -1,30 +1,32 @@
 #include "main.h"
 
-static snake * s1 = NULL;
 static bool active = false;
+static color game_color = C_PIXEL;
 
 static MenuResult StartGame()
 {
     SDL_Event ev;
     MenuResult result = MENU_CONT;
 
-    SDL_TimerID timer = SDL_ADDTIMER(SPEEDS[LEVEL]);
+    SDL_TimerID timer = SDL_ADDTIMER(SPEEDS[LEVEL-1]);
 
     if (!active)
     {
         maze_import(&mazes[MAZE]);
-        s1 = snake_new(maze_sp(), SNAKE_LENGTH, ROT_LEFT);
+        snakes_new(PLAYERS, SNAKE_LENGTH);
 
-        food_new(FOOD);
-        bug_new();
+        food_new(FOOD * PLAYERS, game_color);
+        bug_new(game_color);
         active = true;
     }
 
-    draw_init(snake_score(s1));
+    draw_init(snakes_score(), game_color);
 
     SDL_PUSHEVENT(SDL_INIT);
 
-    bool quit = false, screenchanged;
+    bool quit = false;
+    bool screenchanged = false;
+
     while (!quit)
     {
         SDL_WaitEvent(&ev);
@@ -39,7 +41,7 @@ static MenuResult StartGame()
 
                 maze_draw();
                 food_draw();
-                snake_draw(s1);
+                snakes_draw();
 
                 break;
             }
@@ -47,14 +49,14 @@ static MenuResult StartGame()
             {
                 screenchanged = true;
 
-                snake_process(s1);
+                snakes_process();
 
-                if (!snake_isdying(s1))
+                if (!snakes_alldying())
                     bug_process();
 
-                draw_points(snake_score(s1));
+                draw_points(snakes_score(), game_color);
 
-                if (snake_isdead(s1))
+                if (snakes_alldead())
                 {
                     result = MENU_OK;
                     quit = true;
@@ -66,21 +68,10 @@ static MenuResult StartGame()
             {
                 screenchanged = true;
 
-                switch (ev.key.keysym.sym)
-                {
-                    case SDLK_UP:
-                        snake_turn(s1, ROT_UP);
-                        break;
-                    case SDLK_DOWN:
-                        snake_turn(s1, ROT_DOWN);
-                        break;
-                    case SDLK_RIGHT:
-                        snake_turn(s1, ROT_RIGHT);
-                        break;
-                    case SDLK_LEFT:
-                        snake_turn(s1, ROT_LEFT);
-                        break;
+                SDLKey key = ev.key.keysym.sym;
 
+                switch (key)
+                {
                     case SDLK_SPACE:
                         SDL_ToggleTimer(&timer);
                         break;
@@ -91,6 +82,7 @@ static MenuResult StartGame()
                         break;
 
                     default:
+                        snakes_turn(key);
                         break;
                 }
                 break;
@@ -99,6 +91,10 @@ static MenuResult StartGame()
             case SDL_QUIT:
                 result = MENU_QUIT;
                 quit = true;
+                break;
+
+            default:
+                break;
         }
         if (screenchanged)
             draw_update();
@@ -118,17 +114,31 @@ MenuResult Continue()
 MenuResult SinglePlayer()
 {
     FinishGame();
-
+    game_color = C_PIXEL;
     return StartGame();
 }
 
+MenuResult MultiPlayer()
+{
+    MenuResult num = MultiNum();
+    if(num == MENU_OK)
+    {
+        set_arena(maze_multi_size(PLAYERS));
+        FinishGame();
+        game_color = C_WHITE;
+        MenuResult gr = StartGame();
+        set_arena(maze_multi_size(1));
+        return gr;
+    }
+    return num;
+}
 
 void FinishGame()
 {
     if (!active)
         return;
 
-    snake_delete(s1);
+    snakes_delete();
 
     food_delete();
     maze_delete();
@@ -141,7 +151,7 @@ cell cell_contains(point p)
     if (food_contains(p))
         return CELL_FOOD;
 
-    if (snake_contains(s1, p))
+    if (snakes_contains(p))
         return CELL_SNAKE;
 
     if (bug_contains(p))

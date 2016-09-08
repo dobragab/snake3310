@@ -5,6 +5,7 @@
 
 MenuResult Continue();
 MenuResult SinglePlayer();
+MenuResult MultiPlayer();
 void FinishGame();
 cell cell_contains(point p);
 

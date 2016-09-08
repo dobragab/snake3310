@@ -37,5 +37,5 @@ void SDL_ToggleTimer(SDL_TimerID* timer)
         *timer = 0;
     }
     else
-        *timer = SDL_AddTimer(SPEEDS[LEVEL], timer_callback, NULL);
+        *timer = SDL_AddTimer(SPEEDS[LEVEL-1], timer_callback, NULL);
 }

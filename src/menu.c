@@ -9,6 +9,9 @@ static const MenuItem items[] =
         .name = "Single player",
         .func = SinglePlayer,
     }, {
+        .name = "Multiplayer",
+        .func = MultiPlayer,
+    }, {
         .name = "Level",
         .func = Level,
     }, {
@@ -28,13 +31,8 @@ static const MenuItem items[] =
 
 enum
 {
-    ITEMS_NO = 6,
+    ITEMS_NO = sizeof(items) / sizeof(items[0]),
     ITEMS_SHOWN = 4,
-    ITEMS_W = S_SCREEN_X - 6,
-    ITEMS_H = 10,
-
-    L_SBAR_X = S_SCREEN_X - 3,
-    L_SBAR_Y = 9,
 
     SBAR_W = 3,
     SBAR_H = 7,
@@ -42,9 +40,12 @@ enum
 
 static void MenuDraw(const char *lines[], int no, int top, int selected)
 {
-    draw_cls();
+    draw_cls(C_PIXEL);
 
     point sp = {0, 8};
+
+    int ITEMS_W = S_SCREEN_X - 6;
+    int ITEMS_H = 10;
 
     for (int i = 0; i < ITEMS_SHOWN; ++i)
     {
@@ -70,6 +71,9 @@ static void MenuDraw(const char *lines[], int no, int top, int selected)
     char buf[8];
     sprintf(buf, "8-1-%d", n+1 % 10);
     draw_small_text(buf, (point){S_SCREEN_X - 28, 0}, false);
+
+    int L_SBAR_X = S_SCREEN_X - 3;
+    int L_SBAR_Y = 9;
 
     int vbary = (ITEMS_SHOWN * ITEMS_H - SBAR_H) * n / (no-1) + L_SBAR_Y;
 
@@ -155,11 +159,7 @@ static int Menu(const char *lines[], int no, int * restrict top, int * restrict 
             MenuDraw(lines, no, *top, *selected);
     }
 
-    int n = *top+*selected;
-    if (n >= no)
-        n -= no;
-
-    return n;
+    return (*top + *selected) % no;
 }
 
 const MenuItem * ShowMenu(bool cont)

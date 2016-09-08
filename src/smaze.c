@@ -105,12 +105,12 @@ void maze_import(const smaze * m)
             }
 }
 
-void maze_draw()
+void maze_draw(void)
 {
     binnode_draw(maze.root);
 }
 
-point maze_sp()
+point maze_sp(void)
 {
     return maze.sp;
 }
@@ -123,10 +123,15 @@ bool maze_contains(point p)
     return binnode_find(maze.root, (coord){.p = p});
 }
 
-void maze_delete()
+void maze_delete(void)
 {
     binnode_delete(maze.root);
     maze = (bintree){.size = {0, 0}, .root = NULL };
 }
 
+size maze_multi_size(int num)
+{
+    double ratio = sqrt(num);
+    return (size){ .x = S_ARENA_X1 * ratio, .y = S_ARENA_Y1 * ratio };
+}
 

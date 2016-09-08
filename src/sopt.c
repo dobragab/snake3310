@@ -6,15 +6,20 @@
 
 static const char * ININAME = "config.ini";
 static const double zoom_ratio = 1.2;
-static const double zoom_factor = 1.4;
+// static const double zoom_factor = 1.4;
 
 static int ZOOM = 6;
 
-int LEVEL = 4;
+int LEVEL = 5;
 int MAZE = 0;
 
 int S_ZOOM_X = 6;
 int S_ZOOM_Y = 7;
+
+int PLAYERS = 1;
+
+int S_ARENA_X = S_ARENA_X1;
+int S_ARENA_Y = S_ARENA_Y1;
 
 static void SetZooms()
 {
@@ -78,7 +83,7 @@ void SaveConfig()
 
 MenuResult TopScore()
 {
-    draw_cls();
+    draw_cls(C_PIXEL);
 
     draw_big_text("Top score:", (point){0, 2}, false);
 
@@ -125,7 +130,7 @@ MenuResult TopScore()
 
 static void level_draw(const char * text, int lvl)
 {
-    draw_cls();
+    draw_cls(C_PIXEL);
     draw_small_text(text, (point){3, 0}, false);
 
 
@@ -152,9 +157,9 @@ static void level_draw(const char * text, int lvl)
     draw_update();
 }
 
-static MenuResult LevelChooser(const char * text, int * LVL)
+static MenuResult LevelChooser(const char * text, int * LVL, int min, int max)
 {
-    int lvl = *LVL;
+    int lvl = *LVL - 1;
 
     level_draw(text, lvl);
 
@@ -179,21 +184,21 @@ static MenuResult LevelChooser(const char * text, int * LVL)
                     case SDLK_UP:
                         screenchanged = true;
                         lvl++;
-                        if(lvl > LEVEL_MAX)
-                            lvl = LEVEL_MAX;
+                        if(lvl > max)
+                            lvl = max;
                         break;
 
                     case SDLK_LEFT:
                     case SDLK_DOWN:
                         screenchanged = true;
                         lvl--;
-                        if(lvl < LEVEL_MIN)
-                            lvl = LEVEL_MIN;
+                        if(lvl < min)
+                            lvl = min;
                         break;
 
                     case SDLK_SPACE:
                     case SDLK_RETURN:
-                        *LVL = lvl;
+                        *LVL = lvl + 1;
                         return MENU_OK;
                         break;
 
@@ -213,22 +218,20 @@ static MenuResult LevelChooser(const char * text, int * LVL)
     return MENU_CANCEL;
 }
 
+
 MenuResult Level()
 {
-    return LevelChooser("Level:", &LEVEL);
+    return LevelChooser("Level:", &LEVEL, LEVEL_MIN, LEVEL_MAX);
 }
 
 MenuResult Zoom()
 {
-    int z = ZOOM - 1;
-
-    MenuResult rslt = LevelChooser("Zoom:", &z);
+    MenuResult rslt = LevelChooser("Zoom:", &ZOOM, LEVEL_MIN, LEVEL_MAX);
 
     if (rslt == MENU_OK)
     {
-        ZOOM = z + 1;
         SetZooms();
-        screen_init((point){S_SCREEN_X, S_SCREEN_Y});
+        screen_init();
     }
 
     return rslt;
@@ -236,7 +239,7 @@ MenuResult Zoom()
 
 static void ins_draw(char *lines[], int start, int n)
 {
-    draw_cls();
+    draw_cls(C_PIXEL);
 
     point sp = {0, 2};
     int diff = 9;
@@ -312,5 +315,12 @@ MenuResult Instructions()
     }
 
     return MENU_CANCEL;
+}
+
+MenuResult MultiNum()
+{
+    PLAYERS = 2;
+    MenuResult result = LevelChooser("Players:", &PLAYERS, 1, SNAKES_MAX - 1);
+    return result;
 }
 

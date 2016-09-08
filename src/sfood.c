@@ -4,9 +4,11 @@ typedef struct food_s food;
 
 static int num = 0;
 static point * data = NULL;
+static color c = C_PIXEL;
 
-void food_new(int n)
+void food_new(int n, color cnew)
 {
+    c = cnew;
     data = (point*) malloc (n * sizeof(point));
     debugmalloc(data, "Food-array");
 
@@ -37,7 +39,7 @@ void food_delete()
 void food_draw()
 {
     for (int i = 0; i < num; ++i)
-        draw_item(berry, data[i], ROT_RIGHT, ROTT_NONE);
+        draw_item(berry, data[i], ROT_RIGHT, ROTT_NONE, c);
 }
 
 cell food_contains(point p)

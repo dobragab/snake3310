@@ -7,9 +7,13 @@
 #include <time.h>
 #include <math.h>
 
+#ifdef __WIN32
 #include <SDL.h>
 #include <SDL_gfxPrimitives.h>
-#include <SDL_ttf.h>
+#else
+#include <SDL/SDL.h>
+#include <SDL/SDL_gfxPrimitives.h>
+#endif // __WIN32
 
 #define SUCCESS 0
 //#define DEBUG
@@ -47,6 +51,7 @@
 #include "smaze.h"
 #include "sgame.h"
 #include "sintro.h"
+#include "snakes.h"
 
 
 #endif // MAIN_H_INCLUDED

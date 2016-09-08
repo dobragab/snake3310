@@ -13,11 +13,12 @@ struct snake_t /// snake
     rotation rot_cur, rot_next;
     int16_t die, length, score;
     bool moved;
+    snake_profile profile;
 
     snode *head, *tail;
 };
 
-snake * snake_new(point p, int length, rotation dir)
+snake * snake_new(point p, int length, rotation dir, snake_profile profile)
 {
     point diff = rot_2_point(dir);
 
@@ -33,6 +34,7 @@ snake * snake_new(point p, int length, rotation dir)
     result->score = 0;
     result->die = -1;
     result->moved = false;
+    result->profile = profile;
 
     snode * iter = result->head;
 
@@ -84,39 +86,54 @@ static void snake_clean(const snake * s)
     if (!s || !(s->head))
         return;
 
-    for(snode * iter = s->head; iter != NULL; iter = iter->next)
-        draw_clean(iter->pos);
+    if(s->profile.c == C_PIXEL)
+        for(snode * iter = s->head; iter != NULL; iter = iter->next)
+            draw_clean(iter->pos, s->profile.c);
+    else
+        snake_draw_color(s, C_WHITE);
 }
 
 void snake_draw(const snake * s)
+{
+    snake_draw_color(s, s->profile.c);
+}
+
+void snake_draw_color(const snake * s, color c)
 {
     if (!s || !(s->head))
         return;
 
     rotation cur = point_diff(s->head->pos, s->head->next->pos);
-    draw_item(parts[PART_HEAD], s->head->pos, cur, ROTT_NORMAL);
+    draw_item(parts[PART_HEAD], s->head->pos, cur, ROTT_NORMAL, c);
 
     for (snode *iter = s->head->next; iter->next != NULL; iter = iter->next)
     {
         rotation next = point_diff(iter->pos, iter->next->pos);
 
         if (cur == next)
-            draw_item (parts[PART_BODY + iter->food], iter->pos, cur, ROTT_NORMAL);
+            draw_item (parts[PART_BODY + iter->food], iter->pos, cur, ROTT_NORMAL, c);
         else
-            draw_item (parts[PART_CORNER + iter->food], iter->pos, corner_rotation (next, cur), ROTT_CORNERS);
+            draw_item (parts[PART_CORNER + iter->food], iter->pos, corner_rotation (next, cur), ROTT_CORNERS, c);
 
         cur = next;
     }
 
     rotation diff = point_diff(s->tail->prev->pos, s->tail->pos);
 
-    draw_item(parts[PART_TAIL], s->tail->pos, diff, ROTT_NORMAL);
+    draw_item(parts[PART_TAIL], s->tail->pos, diff, ROTT_NORMAL, c);
 }
 
-void snake_turn(snake * s, rotation r)
+bool snake_turn(snake * s, SDLKey key)
 {
-    if (rotation_valid(s->rot_cur, r))
-        s->rot_next = r;
+    for(int i = 0; i < 5; ++i)
+        if(s->profile.keys[i] == key)
+        {
+            rotation r = i - 2;
+            if (rotation_valid(s->rot_cur, r))
+                s->rot_next = r;
+            return true;
+        }
+    return false;
 }
 
 static void snake_free_tail(snake * s)
@@ -198,8 +215,6 @@ cell snake_contains(const snake * s, point p)
 
 void snake_process(snake * s)
 {
-    point nextpos = arena_next(s->head->pos, s->rot_next);
-
     if (s->die == 0)
     {
         snake_kill(s);
@@ -214,6 +229,7 @@ void snake_process(snake * s)
 
         return;
     }
+    point nextpos = arena_next(s->head->pos, s->rot_next);
 
     s->moved = true;
     cell nextcell = cell_contains(nextpos);
@@ -222,13 +238,13 @@ void snake_process(snake * s)
     if (nextcell == CELL_FOOD)
     {
         s->length += 1;
-        s->score += LEVEL + 1;
+        s->score += LEVEL;
 
         point nextfood = food_eat(nextpos);
 
         snake_step(s, true);
 
-        draw_item(berry, nextfood, ROT_RIGHT, ROTT_NONE);
+        draw_item(berry, nextfood, ROT_RIGHT, ROTT_NONE, s->profile.c);
     }
     else if (nextcell == CELL_BUG)
     {
@@ -257,32 +273,31 @@ void snake_step(snake * s, bool eat)
 
     if (!eat)
     {
-        draw_clean(s->tail->pos);
-        draw_clean(s->tail->prev->pos);
+        draw_clean(s->tail->pos, s->profile.c);
+        draw_clean(s->tail->prev->pos, s->profile.c);
         snake_pop_tail(s);
 
         rotation diff = point_diff(s->tail->prev->pos, s->tail->pos);
 
-        draw_item(parts[PART_TAIL], s->tail->pos, diff, ROTT_NORMAL);
+        draw_item(parts[PART_TAIL], s->tail->pos, diff, ROTT_NORMAL, s->profile.c);
     }
 
-    draw_clean(s->head->pos);
+    draw_clean(s->head->pos, s->profile.c);
     if (s->rot_cur == s->rot_next)
-        draw_item(parts[PART_BODY + s->head->food], s->head->pos, s->rot_cur, ROTT_NORMAL);
+        draw_item(parts[PART_BODY + s->head->food], s->head->pos, s->rot_cur, ROTT_NORMAL, s->profile.c);
     else
-        draw_item(parts[PART_CORNER + s->head->food], s->head->pos, corner_rotation(s->rot_cur, s->rot_next), ROTT_CORNERS);
+        draw_item(parts[PART_CORNER + s->head->food], s->head->pos, corner_rotation(s->rot_cur, s->rot_next), ROTT_CORNERS, s->profile.c);
 
     snake_prepend(s);
     s->head->food = eat;
     s->rot_cur = s->rot_next;
 
     if (eat)
-        draw_clean(s->head->pos);
+        draw_clean(s->head->pos, s->profile.c);
 
     cell nextcell = cell_contains(arena_next(s->head->pos, s->rot_cur));
     bool nexteat = nextcell == CELL_FOOD || nextcell == CELL_BUG;
 
-    draw_item(parts[PART_HEAD + nexteat], s->head->pos, s->rot_cur, ROTT_NORMAL);
-
+    draw_item(parts[PART_HEAD + nexteat], s->head->pos, s->rot_cur, ROTT_NORMAL, s->profile.c);
 }
 

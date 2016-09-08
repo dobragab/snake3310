@@ -2,14 +2,16 @@
 
 static int bug_counter, bug_countdown;
 static point bug_pos;
+static color c;
 
-void bug_new()
+void bug_new(color cnew)
 {
     bug_counter = 0;
     bug_countdown = 0;
+    c = cnew;
 }
 
-int bug_count()
+int bug_count(void)
 {
     if (bug_counter != -1)
         bug_counter++;
@@ -17,7 +19,7 @@ int bug_count()
     return bug_counter;
 }
 
-void bug_process()
+void bug_process(void)
 {
     if (bug_counter != -1)
         return;
@@ -25,10 +27,10 @@ void bug_process()
     if (--(bug_countdown) == 0)
         bug_eat();
     else
-        draw_digits(L_TIMER_X, L_TIMER_Y, bug_countdown, 2);
+        draw_digits(L_TIMER_X, L_TIMER_Y, bug_countdown, 2, c);
 }
 
-void bug_generate()
+void bug_generate(void)
 {
     bug_counter = -1;
     bug_countdown = BUG_TIME;
@@ -46,22 +48,22 @@ void bug_generate()
     int index = rand() % BUGS_COUNT;
 #endif // DEBUG
 
-    draw_item(bugs[index], temp, ROT_RIGHT, ROTT_NONE);
-    draw_bug(bugs[index], (point){L_BUG_X, L_BUG_Y}, ROT_RIGHT, ROTT_NONE);
+    draw_item(bugs[index], temp, ROT_RIGHT, ROTT_NONE, c);
+    draw_bug(bugs[index], (point){L_BUG_X, L_BUG_Y}, ROT_RIGHT, ROTT_NONE, c);
 
-    draw_digits(L_TIMER_X, L_TIMER_Y, bug_countdown, 2);
+    draw_digits(L_TIMER_X, L_TIMER_Y, bug_countdown, 2, c);
 
     bug_pos = temp;
 }
 
-int bug_eat()
+int bug_eat(void)
 {
-    draw_box((point){L_BUG_X, L_BUG_Y}, 8, 4, C_BGND);
-    draw_box((point){L_TIMER_X, L_TIMER_Y}, 7, 5, C_BGND);
+    draw_box((point){L_BUG_X, L_BUG_Y}, 8, 4, draw_color_background(c));
+    draw_box((point){L_TIMER_X, L_TIMER_Y}, 7, 5, draw_color_background(c));
 
     point p = bug_pos;
-    draw_clean(p);
-    draw_clean((point){p.x + 1, p.y});
+    draw_clean(p, c);
+    draw_clean((point){p.x + 1, p.y}, c);
 
     bug_counter = 0;
 
