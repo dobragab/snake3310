@@ -67,7 +67,7 @@ int bug_eat(void)
 
     bug_counter = 0;
 
-    return bug_countdown;
+    return bug_countdown * 2 + LEVEL * 5 + 5;
 }
 
 bool bug_contains(point p)

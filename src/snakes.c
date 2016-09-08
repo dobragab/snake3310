@@ -24,7 +24,6 @@ void snakes_new(int num, int length)
     else
     {
         size mazesize = maze_multi_size(num);
-        printf("SZ: %d; %d\n", mazesize.x, mazesize.y);
         int half = SNAKES_MAX / 2;
         int gapnum = num < half ? num : half;
         double gap = (double)(mazesize.y - gapnum + 1) / (double)(gapnum);
@@ -33,7 +32,6 @@ void snakes_new(int num, int length)
         {
             int y = gap/2 + (gap + 1)*(i % half);
             point sp = { .x = (i < half ? 8 : mazesize.x - 8), .y = y };
-            printf("SP: %d; %d\n", sp.x, sp.y);
             snakes_instance[i] = snake_new(sp, length, (i < half ? ROT_LEFT : ROT_RIGHT), profiles[i]);
         }
     }
@@ -53,11 +51,13 @@ void snakes_delete(void)
 
 bool snakes_alldead(void)
 {
-    for(int i = 0; snakes_instance[i] != NULL; ++i)
+    int alive = 0;
+    int i;
+    for(i = 0; snakes_instance[i] != NULL; ++i)
         if(!snake_isdead(snakes_instance[i]))
-           return false;
+           alive++;
 
-    return true;
+    return i == 1 ? alive == 0 : alive == 1;
 }
 
 bool snakes_alldying(void)

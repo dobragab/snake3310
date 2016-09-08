@@ -203,9 +203,6 @@ void draw_init(int points, color c)
 
 void draw_update(void)
 {
-//    static int n = 0;
-//    printf("Update #%d\n", n++);
-
     SDL_Flip(screen);
 }
 

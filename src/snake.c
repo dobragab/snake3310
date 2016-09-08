@@ -28,8 +28,8 @@ snake * snake_new(point p, int length, rotation dir, snake_profile profile)
     result->head = (snode*) malloc(sizeof(snode));
     debugmalloc(result->head, "Snake-head");
 
-    result->rot_cur = ROT_RIGHT;
-    result->rot_next = ROT_RIGHT;
+    result->rot_cur = -dir;
+    result->rot_next = -dir;
     result->length = 0;
     result->score = 0;
     result->die = -1;
@@ -86,7 +86,7 @@ static void snake_clean(const snake * s)
     if (!s || !(s->head))
         return;
 
-    if(s->profile.c == C_PIXEL)
+    if(s->profile.c == C_PIXEL || s->die == 0)
         for(snode * iter = s->head; iter != NULL; iter = iter->next)
             draw_clean(iter->pos, s->profile.c);
     else

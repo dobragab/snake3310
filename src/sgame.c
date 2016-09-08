@@ -39,7 +39,8 @@ static MenuResult StartGame()
             {
                 screenchanged = true;
 
-                maze_draw();
+                if(PLAYERS == 1)
+                    maze_draw();
                 food_draw();
                 snakes_draw();
 
@@ -114,6 +115,7 @@ MenuResult Continue()
 MenuResult SinglePlayer()
 {
     FinishGame();
+    PLAYERS = 1;
     game_color = C_PIXEL;
     return StartGame();
 }
@@ -157,7 +159,7 @@ cell cell_contains(point p)
     if (bug_contains(p))
         return CELL_BUG;
 
-    if (maze_contains(p))
+    if (PLAYERS == 1 && maze_contains(p))
         return CELL_WALL;
 
     return CELL_NONE;
