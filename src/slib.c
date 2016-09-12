@@ -7,11 +7,11 @@ void debugmalloc(const void * ptr, const char * msg)
     if (ptr == NULL)
     {
         printf("Allocation was unsuccessful: %s\n", msg);
-        longjmp(error_buffer, 1);
+        rage_quit();
     }
 }
 
-void rage_quit()
+void rage_quit(void)
 {
     longjmp(error_buffer, 1);
 }

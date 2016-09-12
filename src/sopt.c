@@ -21,13 +21,13 @@ int PLAYERS = 1;
 int S_ARENA_X = S_ARENA_X1;
 int S_ARENA_Y = S_ARENA_Y1;
 
-static void SetZooms()
+static void SetZooms(void)
 {
     S_ZOOM_X = ZOOM;
     S_ZOOM_Y = lround(zoom_ratio * ZOOM);
 }
 
-void LoadConfig()
+void LoadConfig(void)
 {
     dictionary * inifile = iniparser_load(ININAME);
     if (!inifile)
@@ -52,7 +52,7 @@ static void iniparser_setint(dictionary * ini, const char * entry, int val)
     iniparser_set(ini, entry, buffer);
 }
 
-void SaveConfig()
+void SaveConfig(void)
 {
     dictionary * inifile = iniparser_load(ININAME);
     if (!inifile)
@@ -81,7 +81,7 @@ void SaveConfig()
 }
 
 
-MenuResult TopScore()
+MenuResult TopScore(void)
 {
     draw_cls(C_PIXEL);
 
@@ -219,12 +219,12 @@ static MenuResult LevelChooser(const char * text, int * LVL, int min, int max)
 }
 
 
-MenuResult Level()
+MenuResult Level(void)
 {
     return LevelChooser("Level:", &LEVEL, LEVEL_MIN, LEVEL_MAX);
 }
 
-MenuResult Zoom()
+MenuResult Zoom(void)
 {
     MenuResult rslt = LevelChooser("Zoom:", &ZOOM, LEVEL_MIN, LEVEL_MAX);
 
@@ -253,7 +253,7 @@ static void ins_draw(char *lines[], int start, int n)
     draw_update();
 }
 
-MenuResult Instructions()
+MenuResult Instructions(void)
 {
     char *lines[] =
     {
@@ -317,7 +317,7 @@ MenuResult Instructions()
     return MENU_CANCEL;
 }
 
-MenuResult MultiNum()
+MenuResult MultiNum(void)
 {
     PLAYERS = 2;
     MenuResult result = LevelChooser("Players:", &PLAYERS, 1, SNAKES_MAX - 1);

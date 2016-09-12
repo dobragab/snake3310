@@ -1,5 +1,7 @@
 #include "main.h"
 
+typedef snake * snakes;
+
 static snake_profile profile_single =
 { .keys = { SDLK_LEFT, SDLK_UP, 0, SDLK_DOWN, SDLK_RIGHT }, .c = C_PIXEL };
 
@@ -92,15 +94,29 @@ bool snakes_contains(point p)
     return false;
 }
 
-int snakes_score()
+bool snakes_canstep(const snake * s, point p)
+{
+    for(int i = 0; snakes_instance[i] != NULL; ++i)
+        if(s != snakes_instance[i] &&
+           !snake_isdying(s) &&
+           point_equals(snake_get_next(snakes_instance[i]), p))
+           return false;
+
+    return true;
+}
+
+int snakes_score(void)
 {
     if(snakes_instance[0] != NULL && snakes_instance[1] == NULL)
         return snake_score(snakes_instance[0]);
     return -1;
 }
 
-void snakes_process()
+void snakes_process(void)
 {
+    for(int i = 0; snakes_instance[i] != NULL; ++i)
+        snake_next(snakes_instance[i]);
+
     for(int i = 0; snakes_instance[i] != NULL; ++i)
         snake_process(snakes_instance[i]);
 }

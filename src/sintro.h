@@ -3,6 +3,6 @@
 
 #include "main.h"
 
-void PlayIntro();
+void PlayIntro(void);
 
 #endif // SINTRO_H_INCLUDED

@@ -14,6 +14,7 @@ struct snake_t /// snake
     int16_t die, length, score;
     bool moved;
     snake_profile profile;
+    point nextpos;
 
     snode *head, *tail;
 };
@@ -30,9 +31,9 @@ snake * snake_new(point p, int length, rotation dir, snake_profile profile)
 
     result->rot_cur = -dir;
     result->rot_next = -dir;
+    result->die = -1;
     result->length = 0;
     result->score = 0;
-    result->die = -1;
     result->moved = false;
     result->profile = profile;
 
@@ -53,8 +54,8 @@ snake * snake_new(point p, int length, rotation dir, snake_profile profile)
 
         iter = iter->next;
 
-        iter->food = false;
         iter->pos = p;
+        iter->food = false;
         p.x += diff.x,
         p.y += diff.y;
     }
@@ -213,8 +214,25 @@ cell snake_contains(const snake * s, point p)
     return CELL_NONE;
 }
 
+point snake_get_next(const snake * s)
+{
+    return s->nextpos;
+}
+
+void snake_next(snake * s)
+{
+    if (s == NULL)
+        return;
+
+    if (s->die < 0)
+        s->nextpos = arena_next(s->head->pos, s->rot_next);
+}
+
 void snake_process(snake * s)
 {
+    if (s == NULL)
+        return;
+
     if (s->die == 0)
     {
         snake_kill(s);
@@ -229,10 +247,9 @@ void snake_process(snake * s)
 
         return;
     }
-    point nextpos = arena_next(s->head->pos, s->rot_next);
 
     s->moved = true;
-    cell nextcell = cell_contains(nextpos);
+    cell nextcell = cell_contains(s->nextpos);
     s->moved = false;
 
     if (nextcell == CELL_FOOD)
@@ -240,7 +257,7 @@ void snake_process(snake * s)
         s->length += 1;
         s->score += LEVEL;
 
-        point nextfood = food_eat(nextpos, s->profile.c);
+        point nextfood = food_eat(s->nextpos, s->profile.c);
 
         snake_step(s, true);
 
@@ -253,7 +270,7 @@ void snake_process(snake * s)
 
         snake_step(s, true);
     }
-    else if (nextcell == CELL_SNAKE || nextcell == CELL_WALL)
+    else if (nextcell == CELL_SNAKE || nextcell == CELL_WALL || !snakes_canstep(s, s->nextpos))
     {
         s->die = 2*SNAKE_DIE_LENGTH;
         snake_clean(s);

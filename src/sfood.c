@@ -30,13 +30,13 @@ void food_new(int n, color cnew)
     } while (i < n);
 }
 
-void food_delete()
+void food_delete(void)
 {
     free(data);
     data = NULL;
 }
 
-void food_draw()
+void food_draw(void)
 {
     for (int i = 0; i < num; ++i)
         draw_item(berry, data[i], ROT_RIGHT, ROTT_NONE, c);

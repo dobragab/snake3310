@@ -12,7 +12,7 @@ extern jmp_buf error_buffer;
 #define DEBUGMALLOC(ptr) debugmalloc(ptr, #ptr);
 void debugmalloc(const void*, const char*);
 Uint32 timer_callback(Uint32 ms, void *param);
-void rage_quit();
+void rage_quit(void);
 
 enum
 {

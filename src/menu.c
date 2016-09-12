@@ -179,7 +179,7 @@ const MenuItem * ShowMenu(bool cont)
     return &items[result + !cont];
 }
 
-MenuResult Maze()
+MenuResult Maze(void)
 {
     int top = MAZE, selected = 0;
 

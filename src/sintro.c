@@ -1,6 +1,6 @@
 #include "main.h"
 
-void PlayIntro()
+void PlayIntro(void)
 {
     SDL_Event ev;
 

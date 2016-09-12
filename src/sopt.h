@@ -35,13 +35,13 @@ extern int LEVEL, MAZE;
 extern int S_ZOOM_X, S_ZOOM_Y;
 extern int PLAYERS;
 
-void LoadConfig();
-void SaveConfig();
+void LoadConfig(void);
+void SaveConfig(void);
 
-MenuResult TopScore();
-MenuResult Level();
-MenuResult Zoom();
-MenuResult Instructions();
-MenuResult MultiNum();
+MenuResult TopScore(void);
+MenuResult Level(void);
+MenuResult Zoom(void);
+MenuResult Instructions(void);
+MenuResult MultiNum(void);
 
 #endif // SOPT_H_INCLUDED

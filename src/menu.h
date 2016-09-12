@@ -15,7 +15,7 @@ typedef enum
 
 } MenuResult;
 
-typedef MenuResult (*MenuFunc)();
+typedef MenuResult (*MenuFunc)(void);
 
 typedef struct
 {
@@ -25,6 +25,6 @@ typedef struct
 } MenuItem;
 
 const MenuItem * ShowMenu(bool cont);
-MenuResult Maze();
+MenuResult Maze(void);
 
 #endif // MENU_H_INCLUDED

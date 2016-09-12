@@ -3,7 +3,7 @@
 static bool active = false;
 static color game_color = C_PIXEL;
 
-static MenuResult StartGame()
+static MenuResult StartGame(void)
 {
     SDL_Event ev;
     MenuResult result = MENU_CONT;
@@ -107,12 +107,12 @@ static MenuResult StartGame()
     return result;
 }
 
-MenuResult Continue()
+MenuResult Continue(void)
 {
     return StartGame();
 }
 
-MenuResult SinglePlayer()
+MenuResult SinglePlayer(void)
 {
     FinishGame();
     PLAYERS = 1;
@@ -120,7 +120,7 @@ MenuResult SinglePlayer()
     return StartGame();
 }
 
-MenuResult MultiPlayer()
+MenuResult MultiPlayer(void)
 {
     MenuResult num = MultiNum();
     if(num == MENU_OK)
@@ -135,7 +135,7 @@ MenuResult MultiPlayer()
     return num;
 }
 
-void FinishGame()
+void FinishGame(void)
 {
     if (!active)
         return;
