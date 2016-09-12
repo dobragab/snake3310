@@ -30,10 +30,11 @@ void bug_process(void)
         draw_digits(L_TIMER_X, L_TIMER_Y, bug_countdown, 2, c);
 }
 
-void bug_generate(void)
+void bug_generate(color cnew)
 {
     bug_counter = -1;
     bug_countdown = BUG_TIME;
+    c = cnew;
 
     point temp;
     do

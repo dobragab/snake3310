@@ -54,7 +54,7 @@ cell food_contains(point p)
     return CELL_NONE;
 }
 
-point food_eat(point p)
+point food_eat(point p, color c)
 {
     if (!data || num == 0)
         return p;
@@ -77,7 +77,7 @@ point food_eat(point p)
 
     if (bug_count() == num * BUG_RATE)
     {
-        bug_generate();
+        bug_generate(c);
     }
 
     return temp;

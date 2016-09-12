@@ -1,6 +1,7 @@
 #include "main.h"
 
-static snake_profile profile_single = { .keys = { SDLK_LEFT, SDLK_UP, 0, SDLK_DOWN, SDLK_RIGHT }, .c = C_PIXEL };
+static snake_profile profile_single =
+{ .keys = { SDLK_LEFT, SDLK_UP, 0, SDLK_DOWN, SDLK_RIGHT }, .c = C_PIXEL };
 
 static snake_profile profiles[] =
 {
@@ -57,7 +58,7 @@ bool snakes_alldead(void)
         if(!snake_isdead(snakes_instance[i]))
            alive++;
 
-    return i == 1 ? alive == 0 : alive == 1;
+    return i == 1 ? alive == 0 : alive <= 1;
 }
 
 bool snakes_alldying(void)

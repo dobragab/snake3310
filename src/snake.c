@@ -240,7 +240,7 @@ void snake_process(snake * s)
         s->length += 1;
         s->score += LEVEL;
 
-        point nextfood = food_eat(nextpos);
+        point nextfood = food_eat(nextpos, s->profile.c);
 
         snake_step(s, true);
 

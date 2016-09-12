@@ -8,6 +8,6 @@ void bug_process(void);
 int bug_eat(void);
 int bug_count(void);
 bool bug_contains(point p);
-void bug_generate(void);
+void bug_generate(color c);
 
 #endif // SBUG_H_INCLUDED
