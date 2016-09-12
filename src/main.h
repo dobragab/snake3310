@@ -2,10 +2,13 @@
 #define MAIN_H_INCLUDED
 
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <setjmp.h>
 #include <time.h>
 #include <math.h>
+
+typedef uint32_t color;
 
 #ifdef __WIN32
 #include <SDL.h>
@@ -40,9 +43,9 @@
 
 #include "menu.h"
 
+#include "sdata.h"
 #include "sopt.h"
 #include "slib.h"
-#include "sdata.h"
 #include "sitem.h"
 #include "snake.h"
 #include "sdraw.h"

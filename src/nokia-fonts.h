@@ -21,6 +21,8 @@
 #ifndef NOKIA_FONTS_H
 #define NOKIA_FONTS_H
 
+#include <wchar.h>
+
 struct nokia_menu_char
 {
 	short width;

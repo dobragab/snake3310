@@ -27,7 +27,7 @@ void bug_process(void)
     if (--(bug_countdown) == 0)
         bug_eat();
     else
-        draw_digits(L_TIMER_X, L_TIMER_Y, bug_countdown, 2, c);
+        draw_digits(L_TIMER, bug_countdown, 2, c);
 }
 
 void bug_generate(color cnew)
@@ -39,8 +39,8 @@ void bug_generate(color cnew)
     point temp;
     do
     {
-        temp.x = rand() % (S_ARENA_X - 1);
-        temp.y = rand() % S_ARENA_Y;
+        temp.x = rand() % (S_ARENA.x - 1);
+        temp.y = rand() % S_ARENA.y;
     } while (cell_contains(temp) != CELL_NONE || cell_contains((point){temp.x+1, temp.y}) != CELL_NONE);
 
 #ifdef DEBUG
@@ -50,17 +50,17 @@ void bug_generate(color cnew)
 #endif // DEBUG
 
     draw_item(bugs[index], temp, ROT_RIGHT, ROTT_NONE, c);
-    draw_bug(bugs[index], (point){L_BUG_X, L_BUG_Y}, ROT_RIGHT, ROTT_NONE, c);
+    draw_bug(bugs[index], L_BUG, ROT_RIGHT, ROTT_NONE, c);
 
-    draw_digits(L_TIMER_X, L_TIMER_Y, bug_countdown, 2, c);
+    draw_digits(L_TIMER, bug_countdown, 2, c);
 
     bug_pos = temp;
 }
 
 int bug_eat(void)
 {
-    draw_box((point){L_BUG_X, L_BUG_Y}, 8, 4, draw_color_background(c));
-    draw_box((point){L_TIMER_X, L_TIMER_Y}, 7, 5, draw_color_background(c));
+    draw_box(L_BUG,   (size){8, 4}, draw_color_background(c));
+    draw_box(L_TIMER, (size){7, 5}, draw_color_background(c));
 
     point p = bug_pos;
     draw_clean(p, c);

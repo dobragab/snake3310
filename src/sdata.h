@@ -13,14 +13,14 @@ typedef enum
 
 } cell;
 
-typedef struct /// point
+typedef struct point
 {
     int16_t x, y;
 } point;
 
 typedef point size;
 
-typedef enum /// rotation
+typedef enum rotation
 {
     ROT_LEFT = -2,
     ROT_UP = -1,
@@ -29,7 +29,7 @@ typedef enum /// rotation
 
 } rotation;
 
-typedef enum /// rot_type
+typedef enum rot_type
 {
     ROTT_NONE,
     ROTT_NORMAL,

@@ -6,25 +6,18 @@
 
 static const char * ININAME = "config.ini";
 static const double zoom_ratio = 1.2;
-// static const double zoom_factor = 1.4;
-
 static int ZOOM = 6;
 
 int LEVEL = 5;
 int MAZE = 0;
-
-int S_ZOOM_X = 6;
-int S_ZOOM_Y = 7;
-
 int PLAYERS = 1;
 
-int S_ARENA_X = S_ARENA_X1;
-int S_ARENA_Y = S_ARENA_Y1;
+size S_ZOOM = { 6, 7 };
 
 static void SetZooms(void)
 {
-    S_ZOOM_X = ZOOM;
-    S_ZOOM_Y = lround(zoom_ratio * ZOOM);
+    S_ZOOM.x = ZOOM;
+    S_ZOOM.y = lround(zoom_ratio * ZOOM);
 }
 
 void LoadConfig(void)
@@ -85,12 +78,12 @@ MenuResult TopScore(void)
 {
     draw_cls(C_PIXEL);
 
-    draw_big_text("Top score:", (point){0, 2}, false);
+    draw_big_text("Top score:", (point){0, 2}, C_PIXEL);
 
     char buf[10] = {0};
     sprintf(buf, "%d", 1309);
 
-    draw_big_text(buf, (point){0, 17}, false);
+    draw_big_text(buf, (point){0, 17}, C_PIXEL);
 
     draw_update();
 
@@ -131,24 +124,24 @@ MenuResult TopScore(void)
 static void level_draw(const char * text, int lvl)
 {
     draw_cls(C_PIXEL);
-    draw_small_text(text, (point){3, 0}, false);
+    draw_small_text(text, (point){3, 0}, C_PIXEL);
 
 
-    point sp = {6, S_SCREEN_Y - 11};
+    point sp = {6, S_SCREEN.y - 11};
 
     for (int i = LEVEL_MIN; i <= LEVEL_MAX; ++i)
     {
-        draw_box(sp, 4, 1, C_PIXEL);
-        draw_box((point){sp.x + 4, sp.y - 6 - 2*i}, 1, 6 + 2*i + 1, C_PIXEL);
+        draw_box(sp, (size){4, 1}, C_PIXEL);
+        draw_box((point){sp.x + 4, sp.y - 6 - 2*i}, (size){1, 6 + 2*i + 1}, C_PIXEL);
 
         sp.x += 8;
     }
 
-    sp = (point){5, S_SCREEN_Y - 18};
+    sp = (point){5, S_SCREEN.y - 18};
 
     for (int i = LEVEL_MIN; i <= lvl; ++i)
     {
-        draw_box(sp, 4, 6 + 2*i, C_PIXEL);
+        draw_box(sp, (size){4, 6 + 2*i}, C_PIXEL);
 
         sp.x += 8;
         sp.y -= 2;
@@ -246,7 +239,7 @@ static void ins_draw(char *lines[], int start, int n)
 
     for (int i = start; i < start+n; ++i)
     {
-        draw_narrow_text(lines[i], sp, false);
+        draw_narrow_text(lines[i], sp, C_PIXEL);
         sp.y += diff;
     }
 

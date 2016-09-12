@@ -31,14 +31,14 @@ rotation point_diff(point prev, point next)
 {
     int result = (2 * (prev.x - next.x) + prev.y - next.y);
 
-    if (result == 2*S_ARENA_X - 2)
+    if (result == 2*S_ARENA.x - 2)
         return ROT_LEFT;
-    if (result == 2 - 2*S_ARENA_X)
+    if (result == 2 - 2*S_ARENA.x)
         return ROT_RIGHT;
 
-    if (result == S_ARENA_Y - 1)
+    if (result == S_ARENA.y - 1)
         return ROT_UP;
-    if (result == 1 - S_ARENA_Y)
+    if (result == 1 - S_ARENA.y)
         return ROT_DOWN;
 
     return result;
@@ -50,13 +50,13 @@ point arena_next(point p, rotation rot)
     point temp = (point){.x = p.x + diff.x, .y = p.y + diff.y};
 
     if (temp.x < 0)
-        temp.x = S_ARENA_X - 1;
-    else if (temp.x >= S_ARENA_X)
+        temp.x = S_ARENA.x - 1;
+    else if (temp.x >= S_ARENA.x)
         temp.x = 0;
 
     if (temp.y < 0)
-        temp.y = S_ARENA_Y - 1;
-    else if (temp.y >= S_ARENA_Y)
+        temp.y = S_ARENA.y - 1;
+    else if (temp.y >= S_ARENA.y)
         temp.y = 0;
 
     return temp;
@@ -64,6 +64,6 @@ point arena_next(point p, rotation rot)
 
 point arena_to_pixel(point p)
 {
-    return (point) {.x = p.x * 4 + L_ARENA_X + 1, .y = p.y * 4 + L_ARENA_Y + 1};
+    return (point) {.x = p.x * 4 + L_ARENA.x + 1, .y = p.y * 4 + L_ARENA.y + 1};
 }
 

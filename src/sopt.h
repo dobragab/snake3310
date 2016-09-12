@@ -28,12 +28,10 @@ enum
     S_ARENA_Y1 = 9,
 };
 
-extern int S_ARENA_X;
-extern int S_ARENA_Y;
-
-extern int LEVEL, MAZE;
-extern int S_ZOOM_X, S_ZOOM_Y;
+extern int LEVEL;
+extern int MAZE;
 extern int PLAYERS;
+extern size S_ZOOM;
 
 void LoadConfig(void);
 void SaveConfig(void);

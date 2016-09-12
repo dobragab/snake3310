@@ -46,8 +46,7 @@ static void MenuDraw(const char *lines[], int no, int top, int selected)
 
     point sp = {0, 8};
 
-    int ITEMS_W = S_SCREEN_X - 6;
-    int ITEMS_H = 10;
+    size S_ITEMS = { S_SCREEN.x - 6, 10 };
 
     for (int i = 0; i < ITEMS_SHOWN; ++i)
     {
@@ -57,11 +56,11 @@ static void MenuDraw(const char *lines[], int no, int top, int selected)
         int index = j >= no ? j-no : j;
         if (i == selected)
         {
-            draw_box(sp, ITEMS_W, ITEMS_H, C_PIXEL);
-            draw_small_text(lines[index], tsp, true);
+            draw_box(sp, S_ITEMS, C_PIXEL);
+            draw_small_text(lines[index], tsp, C_BGND);
         }
         else
-            draw_small_text(lines[index], tsp, false);
+            draw_small_text(lines[index], tsp, C_PIXEL);
 
         sp.y += 10;
     }
@@ -72,20 +71,18 @@ static void MenuDraw(const char *lines[], int no, int top, int selected)
 
     char buf[BUFSIZ];
     int len = sprintf(buf, "%s-%d", menu_text, n+1 % 10);
-    printf("%s\n", buf);
     int ttflen = len / 2 * 11 + 6;
-    draw_small_text(buf, (point){S_SCREEN_X - ttflen, 0}, false);
+    draw_small_text(buf, (point){S_SCREEN.x - ttflen, 0}, C_PIXEL);
 
-    int L_SBAR_X = S_SCREEN_X - 3;
-    int L_SBAR_Y = 9;
+    point L_SBAR = { S_SCREEN.x - 3, 9 };
 
-    int vbary = (ITEMS_SHOWN * ITEMS_H - SBAR_H) * n / (no-1) + L_SBAR_Y;
+    int vbary = (ITEMS_SHOWN * S_ITEMS.y - SBAR_H) * n / (no-1) + L_SBAR.y;
 
-    draw_box((point){L_SBAR_X, L_SBAR_Y}, 1, ITEMS_SHOWN * ITEMS_H, C_PIXEL);
-    draw_box((point){L_SBAR_X, vbary+1}, SBAR_W - 1, SBAR_H - 2, C_BGND);
-    draw_box((point){L_SBAR_X + SBAR_W-1, vbary + 1}, 1, SBAR_H - 2, C_PIXEL);
-    draw_box((point){L_SBAR_X, vbary}, SBAR_W-1, 1, C_PIXEL);
-    draw_box((point){L_SBAR_X, vbary+SBAR_H-1}, SBAR_W-1, 1, C_PIXEL);
+    draw_box(L_SBAR,                                  (size){1, ITEMS_SHOWN * S_ITEMS.y}, C_PIXEL);
+    draw_box((point){L_SBAR.x, vbary+1},              (size){SBAR_W - 1, SBAR_H - 2},     C_BGND);
+    draw_box((point){L_SBAR.x + SBAR_W-1, vbary + 1}, (size){1, SBAR_H - 2},              C_PIXEL);
+    draw_box((point){L_SBAR.x, vbary},                (size){SBAR_W-1, 1},                C_PIXEL);
+    draw_box((point){L_SBAR.x, vbary+SBAR_H-1},       (size){SBAR_W-1, 1},                C_PIXEL);
 
     draw_update();
 }
@@ -197,7 +194,6 @@ MenuResult Maze(void)
     for (int i = 0; i < MAZES_COUNT; ++i)
         lines[i] = mazes[i].name;
 
-    printf("%s\n", menu_text);
     int result = Menu(lines, MAZES_COUNT, &top, &selected);
 
     if (result < 0)

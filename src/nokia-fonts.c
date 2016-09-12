@@ -18,7 +18,6 @@
  *
  */
 
-#include <wchar.h>
 #include <stdio.h>
 
 #include "nokia-fonts.h"

@@ -1,10 +1,6 @@
 #ifndef SLIB_H_INCLUDED
 #define SLIB_H_INCLUDED
 
-#include <stdint.h>
-
-typedef uint32_t color;
-
 #include "main.h"
 
 extern jmp_buf error_buffer;

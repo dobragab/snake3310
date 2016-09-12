@@ -45,7 +45,7 @@ static void draw_wall(point pt, int right, int down)
 {
     point p = arena_to_pixel(pt);
     point q = (point) { .x = p.x + 1 - right, .y = p.y + 1 - down };
-    draw_box(q, 2, 2, C_PIXEL);
+    draw_box(q, (size){2, 2}, C_PIXEL);
 }
 
 static void binnode_draw(const binnode * node)

@@ -21,8 +21,8 @@ void food_new(int n, color cnew)
     point temp;
     do
     {
-        temp.x = rand() % S_ARENA_X;
-        temp.y = rand() % S_ARENA_Y;
+        temp.x = rand() % S_ARENA.x;
+        temp.y = rand() % S_ARENA.y;
 
         if (cell_contains(temp) == CELL_NONE && food_contains(temp) == CELL_NONE)
             data[i++] = temp;
@@ -69,8 +69,8 @@ point food_eat(point p, color c)
     point temp;
     do
     {
-        temp.x = rand() % S_ARENA_X;
-        temp.y = rand() % S_ARENA_Y;
+        temp.x = rand() % S_ARENA.x;
+        temp.y = rand() % S_ARENA.y;
     } while (cell_contains(temp) != CELL_NONE);
 
     data[i] = temp;
