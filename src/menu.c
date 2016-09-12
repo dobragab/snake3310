@@ -38,6 +38,8 @@ enum
     SBAR_H = 7,
 };
 
+static const char * menu_text = "";
+
 static void MenuDraw(const char *lines[], int no, int top, int selected)
 {
     draw_cls(C_PIXEL);
@@ -68,9 +70,11 @@ static void MenuDraw(const char *lines[], int no, int top, int selected)
     if (n >= no)
         n -= no;
 
-    char buf[8];
-    sprintf(buf, "8-1-%d", n+1 % 10);
-    draw_small_text(buf, (point){S_SCREEN_X - 28, 0}, false);
+    char buf[BUFSIZ];
+    int len = sprintf(buf, "%s-%d", menu_text, n+1 % 10);
+    printf("%s\n", buf);
+    int ttflen = len / 2 * 11 + 6;
+    draw_small_text(buf, (point){S_SCREEN_X - ttflen, 0}, false);
 
     int L_SBAR_X = S_SCREEN_X - 3;
     int L_SBAR_Y = 9;
@@ -171,10 +175,15 @@ const MenuItem * ShowMenu(bool cont)
     for (int i = 0; i < ITEMS_NO - !cont; ++i)
         lines[i] = items[i + !cont].name;
 
+    menu_text = "8-1";
     int result = Menu(lines, ITEMS_NO - !cont, &top, &selected);
 
     if (result < 0)
         return NULL;
+
+    static char buf[BUFSIZ];
+    sprintf(buf, "%s-%d", menu_text, result + 1);
+    menu_text = buf;
 
     return &items[result + !cont];
 }
@@ -188,6 +197,7 @@ MenuResult Maze(void)
     for (int i = 0; i < MAZES_COUNT; ++i)
         lines[i] = mazes[i].name;
 
+    printf("%s\n", menu_text);
     int result = Menu(lines, MAZES_COUNT, &top, &selected);
 
     if (result < 0)
