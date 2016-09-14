@@ -27,7 +27,7 @@ void PlayIntro(void)
 
                 draw_cls(C_PIXEL);
 
-                draw_img(&intro[frames], C_PIXEL);
+                draw_img(&intro[frames >= INTRO_SIZE ? 0 : frames], C_PIXEL);
 
                 ++frames;
                 break;

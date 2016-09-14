@@ -8,8 +8,9 @@ enum
     LEVEL_MIN = 0,
     LEVEL_MAX = 8,
 
-    INTRO_SPEED = 0,
-    INTRO_LENGTH = 2,
+    INTRO_SPEED = 4,
+    INTRO_SIZE = 6,
+    INTRO_LENGTH = 11,
 
     FOOD = 1,
     BUG_RATE = 5,
