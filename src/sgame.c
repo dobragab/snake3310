@@ -43,13 +43,14 @@ static MenuResult StartGame(void)
                     maze_draw();
                 food_draw();
                 snakes_draw();
+                score_reset();
 
                 break;
             }
             case SDL_TICK:
             {
                 screenchanged = true;
-
+                score_tick();
                 snakes_process();
 
                 if (!snakes_alldying())
@@ -101,6 +102,8 @@ static MenuResult StartGame(void)
             draw_update();
     }
 
+    snakes_add_score();
+
     if (timer)
         SDL_RemoveTimer(timer);
 
@@ -120,16 +123,52 @@ MenuResult SinglePlayer(void)
     return StartGame();
 }
 
+void ShowScoreBoard()
+{
+    draw_cls(C_BGND);
+
+    score_draw();
+    draw_update();
+
+    bool quit = false;
+    while (!quit)
+    {
+        SDL_Event ev;
+        SDL_WaitEvent(&ev);
+
+        switch (ev.type)
+        {
+            case SDL_QUIT:
+                rage_quit();
+                break;
+            case SDL_KEYDOWN:
+            {
+                SDLKey key = ev.key.keysym.sym;
+                if (key == SDLK_ESCAPE || key == SDLK_RETURN)
+                    quit = true;
+                break;
+            }
+            default:
+                break;
+        }
+    }
+}
+
 MenuResult MultiPlayer(void)
 {
     MenuResult num = MultiNum();
     if(num == MENU_OK)
     {
-        set_arena(maze_multi_size(PLAYERS));
         FinishGame();
+        set_arena(maze_multi_size(PLAYERS));
         game_color = C_WHITE;
+
         MenuResult gr = StartGame();
+
         set_arena(maze_multi_size(1));
+
+        ShowScoreBoard();
+
         return gr;
     }
     return num;

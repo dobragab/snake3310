@@ -14,5 +14,6 @@ bool snakes_contains(point p);
 bool snakes_canstep(const snake * s, point p);
 void snakes_process(void);
 int snakes_score(void);
+void snakes_add_score(void);
 
 #endif // SNAKES_H_INCLUDED

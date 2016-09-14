@@ -55,6 +55,7 @@ typedef uint32_t color;
 #include "sgame.h"
 #include "sintro.h"
 #include "snakes.h"
+#include "sscore.h"
 
 
 #endif // MAIN_H_INCLUDED

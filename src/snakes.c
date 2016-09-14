@@ -121,4 +121,9 @@ void snakes_process(void)
         snake_process(snakes_instance[i]);
 }
 
-
+void snakes_add_score(void)
+{
+    for(int i = 0; snakes_instance[i] != NULL; ++i)
+        if(!snake_isdead(snakes_instance[i]))
+           snake_add_score(snakes_instance[i]);
+}

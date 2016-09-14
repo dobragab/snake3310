@@ -273,6 +273,7 @@ void snake_process(snake * s)
     else if (nextcell == CELL_SNAKE || nextcell == CELL_WALL || !snakes_canstep(s, s->nextpos))
     {
         s->die = 2*SNAKE_DIE_LENGTH;
+        score_add(s->score, s->profile.c);
         snake_clean(s);
     }
     else
@@ -318,3 +319,7 @@ void snake_step(snake * s, bool eat)
     draw_item(parts[PART_HEAD + nexteat], s->head->pos, s->rot_cur, ROTT_NORMAL, s->profile.c);
 }
 
+void snake_add_score(const snake * s)
+{
+    score_add(s->score, s->profile.c);
+}

@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-typedef enum
+typedef enum cell
 {
     CELL_NONE = 0,
     CELL_WALL,

@@ -26,6 +26,7 @@ void _snake_print(const snake * s);
 int snake_score(const snake * s);
 bool snake_isdying(const snake * s);
 bool snake_isdead(const snake * s);
+void snake_add_score(const snake * s);
 
 #ifdef DEBUG
 #define snake_print(s) _snake_print(s)
