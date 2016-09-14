@@ -1,21 +1,23 @@
 #ifndef DEBUGMALLOC_H
 #define DEBUGMALLOC_H
 
-/* 
+/* https://infoc.eet.bme.hu/debugmalloc/ */
+
+/*
  * Ezek azok a makrok, amelyek biztositjak, hogy a sajat
  * fuggvenyek hivodjanak, amikor malloc() vagy free()
  * szerepel a programban.
- * 
+ *
  * Semmi egyeb teendo nincsen, csak az, hogy ezt a header
  * fajlt be kell szerkeszteni _minden_ forraskodba. A szokasos
  * formaban megadott malloc() es free() hivasok helyett ez a
  * valtozat fog automatikusan mindig meghivodni a makrok miatt.
- * 
+ *
  * Fontos, hogy ezt az include fajlt a project OSSZES
  * forras fajljaban hasznalni kell! Siman, a beepitett
  * free()-vel nem lehet felszabaditani egy olyan teruletet,
  * amelyet ez a malloc() foglalt! Mas a pointer.
- * 
+ *
  * Ha szukseg van arra, hogy a malloc() es a free() cime
  * kepezheto legyen, akkor a HASZNALOM_A_MALLOC_FREE_POINTERET
  * makrot definialni kell az #include "debugmalloc.h" sor
@@ -50,7 +52,7 @@ void debugmalloc_naplofajl(char const *nev);
  */
 void debugmalloc_dump();
 
-/* 
+/*
  * Ezek a fuggvenyek vannak a szokasos malloc() es free()
  * helyett. Nem kell oket hasznalni kozvetlenul; a makrok
  * altal a rendes malloc() es free() ezekre cserelodik ki.

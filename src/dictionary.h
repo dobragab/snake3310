@@ -1,5 +1,5 @@
-
 /*-------------------------------------------------------------------------*/
+/*-- https://github.com/ndevilla/iniparser --------------------------------*/
 /**
    @file    dictionary.h
    @author  N. Devillard

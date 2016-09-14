@@ -1,3 +1,5 @@
+/* https://infoc.eet.bme.hu/debugmalloc/ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
