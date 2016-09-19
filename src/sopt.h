@@ -9,7 +9,7 @@ enum
     LEVEL_MAX = 8,
 
     INTRO_SPEED = 4,
-    INTRO_SIZE = 6,
+    INTRO_SIZE = 5,
     INTRO_LENGTH = 11,
 
     FOOD = 1,
