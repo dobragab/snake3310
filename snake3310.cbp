@@ -124,6 +124,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/sopt.h" />
+		<Unit filename="src/sscore.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sscore.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
