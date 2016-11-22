@@ -7,12 +7,12 @@ static snake_profile profile_single =
 
 static snake_profile profiles[] =
 {
-    { .keys = { SDLK_LEFT, SDLK_UP, 0, SDLK_DOWN, SDLK_RIGHT }, .c = 0xFF0000FF }, // Fred
-    { .keys = { SDLK_a,    SDLK_w,  0, SDLK_s,    SDLK_d     }, .c = 0x00FF00FF }, // Greenlee
-    { .keys = { SDLK_g,    SDLK_z,  0, SDLK_h,    SDLK_j     }, .c = 0xFF00FFFF }, // Pinkney
-    { .keys = { SDLK_a,    SDLK_w,  0, SDLK_s,    SDLK_d     }, .c = 0x00FFFFFF }, // Bluebell
-    { .keys = { SDLK_a,    SDLK_w,  0, SDLK_s,    SDLK_d     }, .c = 0xFF8000FF }, // Willem
-    { .keys = { SDLK_a,    SDLK_w,  0, SDLK_s,    SDLK_d     }, .c = 0xCCCCCCFF }, // Greydon
+    { .keys = { SDLK_LEFT,      SDLK_UP,            0, SDLK_DOWN,   SDLK_RIGHT      }, .c = 0xFF0000FF }, // Fred
+    { .keys = { SDLK_a,         SDLK_w,             0, SDLK_s,      SDLK_d          }, .c = 0x00FF00FF }, // Greenlee
+    { .keys = { SDLK_f,         SDLK_t,             0, SDLK_g,      SDLK_h          }, .c = 0xFF00FFFF }, // Pinkney
+    { .keys = { SDLK_j,         SDLK_i,             0, SDLK_k,      SDLK_l          }, .c = 0x00FFFFFF }, // Bluebell
+    { .keys = { SDLK_SEMICOLON, SDLK_LEFTBRACKET,   0, SDLK_QUOTE,  SDLK_BACKSLASH  }, .c = 0xFF8000FF }, // Willem
+    { .keys = { SDLK_KP4,       SDLK_KP8,           0, SDLK_KP5,    SDLK_KP6        }, .c = 0xCCCCCCFF }, // Greydon
 };
 
 static snakes * snakes_instance = NULL;
