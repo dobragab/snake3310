@@ -70,7 +70,7 @@ static MenuResult StartGame(void)
             {
                 screenchanged = true;
 
-                SDLKey key = ev.key.keysym.sym;
+                SDL_Keycode  key = ev.key.keysym.sym;
 
                 switch (key)
                 {
@@ -143,7 +143,7 @@ void ShowScoreBoard()
                 break;
             case SDL_KEYDOWN:
             {
-                SDLKey key = ev.key.keysym.sym;
+                SDL_Keycode  key = ev.key.keysym.sym;
                 if (key == SDLK_ESCAPE || key == SDLK_RETURN)
                     quit = true;
                 break;

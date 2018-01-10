@@ -9,10 +9,10 @@ extern point L_TIMER;
 extern point L_BUG;
 extern point L_ARENA;
 
-#define C_PIXEL ((color)(0x000000FF))
+#define C_PIXEL ((color)(0x00000000))
 #define C_WHITE ((color)(0xFFFFFFFF))
-#define C_RED   ((color)(0xFF0000FF))
-#define C_BGND  ((color)(0xB2BD08FF))
+// #define C_RED   ((color)(0xFFFF00FF))
+#define C_BGND  ((color)(0x00FFcc00))
 
 extern const int SPEEDS[];
 

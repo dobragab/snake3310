@@ -1,7 +1,8 @@
 #include "main.h"
 
 const int SPEEDS[] =  {658, 478, 378, 298, 228, 178, 138, 108, 88};
-static SDL_Surface * screen = NULL;
+static SDL_Surface *screen = NULL;
+static SDL_Window *window = NULL;
 
 size S_ARENA =  { S_ARENA_X1,         S_ARENA_Y1 };           /// 20 x 9
 size S_SCREEN = { S_ARENA_X1 * 4 + 4, S_ARENA_Y1 * 4 + 13 };  /// 84 x 49
@@ -24,20 +25,21 @@ void set_arena(size s)
     screen_init();
 }
 
-void SDL_SetCaption(const char * caption)
-{
-    SDL_WM_SetCaption(caption, caption);
-}
-
 void screen_init()
 {
-    if(screen)
-        SDL_FreeSurface(screen);
+    if(window) {
+      // SDL_FreeSurface(screen);
+      SDL_SetWindowSize(window, S_SCREEN.x * S_ZOOM.x, S_SCREEN.y * S_ZOOM.y);
+      return;
+    }
 
-    screen = SDL_SetVideoMode(S_SCREEN.x * S_ZOOM.x, S_SCREEN.y * S_ZOOM.y, 0, SDL_ANYFORMAT);
-    DEBUGMALLOC(screen);
-
-    SDL_SetCaption("Snake 2 @ Nokia 3310");
+    // screen = SDL_SetVideoMode(S_SCREEN.x * S_ZOOM.x, S_SCREEN.y * S_ZOOM.y, 0, SDL_ANYFORMAT);
+    window = SDL_CreateWindow("Snake 2 @ Nokia 3310",
+                          SDL_WINDOWPOS_UNDEFINED,
+                          SDL_WINDOWPOS_UNDEFINED,
+                          S_SCREEN.x * S_ZOOM.x, S_SCREEN.y * S_ZOOM.y,
+                          0);
+    // DEBUGMALLOC(screen);
 }
 
 
@@ -48,7 +50,11 @@ color draw_color_background(color front_color)
 
 static void draw_pixel_xy(int16_t x, int16_t y, color c)
 {
-    boxColor(screen, x * S_ZOOM.x, y * S_ZOOM.y, (x+1) * S_ZOOM.x - 1, (y+1) * S_ZOOM.y - 1, c);
+    screen = SDL_GetWindowSurface(window);
+    SDL_Rect rect = {.x = x * S_ZOOM.x, .y = y * S_ZOOM.y,
+      .w = S_ZOOM.x -1, .h = S_ZOOM.y -1 };
+    SDL_FillRect(screen, &rect, c);
+    // boxColor(screen, x * S_ZOOM.x, y * S_ZOOM.y, (x+1) * S_ZOOM.x - 1, (y+1) * S_ZOOM.y - 1, c);
 }
 
 void draw_small_text(const char * text, point p, color c)
@@ -109,7 +115,11 @@ void draw_pixel(point p, color c)
 
 void draw_box(point p, size s, color c)
 {
-    boxColor(screen, p.x * S_ZOOM.x, p.y * S_ZOOM.y, (p.x+s.x) * S_ZOOM.x - 1, (p.y+s.y) * S_ZOOM.y - 1, c);
+  screen = SDL_GetWindowSurface(window);
+  SDL_Rect rect = {.x = p.x * S_ZOOM.x, .y = p.y * S_ZOOM.y,
+    .w = (s.x) * S_ZOOM.x - 1, .h = (s.y) * S_ZOOM.y - 1};
+  SDL_FillRect(screen, &rect, c);
+    // boxColor(screen, p.x * S_ZOOM.x, p.y * S_ZOOM.y, (p.x+s.x) * S_ZOOM.x - 1, (p.y+s.y) * S_ZOOM.y - 1, c);
 }
 
 static void digit(int16_t x, int16_t y, snum n, color c)
@@ -182,7 +192,12 @@ void draw_points(int n, color c)
 
 void draw_cls(color c)
 {
-    boxColor(screen, 0, 0, S_SCREEN.x * S_ZOOM.x - 1, S_SCREEN.y * S_ZOOM.y - 1, draw_color_background(c));
+  screen = SDL_GetWindowSurface(window);
+  SDL_Rect rect = {.x = 0, .y = 0,
+    .w = S_SCREEN.x * S_ZOOM.x - 1, .h = S_SCREEN.y * S_ZOOM.y - 1};
+  SDL_FillRect(screen, &rect, draw_color_background(c));
+
+    // boxColor(screen, 0, 0, S_SCREEN.x * S_ZOOM.x - 1, S_SCREEN.y * S_ZOOM.y - 1, draw_color_background(c));
 }
 
 void draw_init(int points, color c)
@@ -201,7 +216,7 @@ void draw_init(int points, color c)
 
 void draw_update(void)
 {
-    SDL_Flip(screen);
+    SDL_UpdateWindowSurface(window);
 }
 
 void draw_img(const spic * pic, color c)

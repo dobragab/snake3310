@@ -8,7 +8,7 @@ typedef struct snake_t snake;
 typedef struct
 {
     color c;
-    SDLKey keys[5]; // in { LEFT, UP, unused, DOWN, RIGHT } order
+    SDL_Keycode  keys[5]; // in { LEFT, UP, unused, DOWN, RIGHT } order
 
 } snake_profile;
 
@@ -19,7 +19,7 @@ void snake_draw_color(const snake * s, color c);
 void snake_next(snake * s);
 void snake_process(snake * s);
 void snake_step(snake * s, bool eat);
-bool snake_turn(snake * s, SDLKey key);
+bool snake_turn(snake * s, SDL_Keycode  key);
 cell snake_contains(const snake * s, point p);
 point snake_get_next(const snake * s);
 void _snake_print(const snake * s);

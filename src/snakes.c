@@ -12,7 +12,7 @@ static snake_profile profiles[] =
     { .keys = { SDLK_f,         SDLK_t,             0, SDLK_g,      SDLK_h          }, .c = 0xFF00FFFF }, // Pinkney
     { .keys = { SDLK_j,         SDLK_i,             0, SDLK_k,      SDLK_l          }, .c = 0x00FFFFFF }, // Bluebell
     { .keys = { SDLK_SEMICOLON, SDLK_LEFTBRACKET,   0, SDLK_QUOTE,  SDLK_BACKSLASH  }, .c = 0xFF8000FF }, // Willem
-    { .keys = { SDLK_KP4,       SDLK_KP8,           0, SDLK_KP5,    SDLK_KP6        }, .c = 0xCCCCCCFF }, // Greydon
+    { .keys = { SDLK_KP_4,      SDLK_KP_8,          0, SDLK_KP_5,   SDLK_KP_6       }, .c = 0xCCCCCCFF }, // Greydon
 };
 
 static snakes * snakes_instance = NULL;
@@ -72,7 +72,7 @@ bool snakes_alldying(void)
     return true;
 }
 
-void snakes_turn(SDLKey key)
+void snakes_turn(SDL_Keycode  key)
 {
     for(int i = 0; snakes_instance[i] != NULL; ++i)
         if(snake_turn(snakes_instance[i], key))
@@ -127,4 +127,3 @@ void snakes_add_score(void)
         if(!snake_isdying(snakes_instance[i]))
            snake_add_score(snakes_instance[i]);
 }
-
