@@ -12,10 +12,8 @@ typedef uint32_t color;
 
 #ifdef __WIN32
 #include <SDL.h>
-#include <SDL_gfxPrimitives.h>
 #else
-#include <SDL/SDL.h>
-#include <SDL/SDL_gfxPrimitives.h>
+#include <SDL.h>
 #endif // __WIN32
 
 #define SUCCESS 0

@@ -8,7 +8,7 @@ void snakes_delete(void);
 
 bool snakes_alldead(void);
 bool snakes_alldying(void);
-void snakes_turn(SDLKey key);
+void snakes_turn(SDL_Keycode  key);
 void snakes_draw(void);
 bool snakes_contains(point p);
 bool snakes_canstep(const snake * s, point p);

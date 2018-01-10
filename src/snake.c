@@ -124,7 +124,7 @@ void snake_draw_color(const snake * s, color c)
     draw_item(parts[PART_TAIL], s->tail->pos, diff, ROTT_NORMAL, c);
 }
 
-bool snake_turn(snake * s, SDLKey key)
+bool snake_turn(snake * s, SDL_Keycode  key)
 {
     for(int i = 0; i < 5; ++i)
         if(s->profile.keys[i] == key)
